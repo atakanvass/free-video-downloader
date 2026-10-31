@@ -1,38 +1,40 @@
 # Free Video Downloader
 
-## Download · İndir
+Download YouTube and Instagram videos as MP4 or audio as MP3 from a compact desktop app. Choose from the available video resolutions and save files directly to your Downloads folder.
+
+## Downloads
 
 - [macOS — Apple Silicon & Intel (Beta)](https://github.com/atakanvass/free-video-downloader/releases/download/v0.1.0-beta/FreeVideoDownloader-macOS-beta.zip)
 - [Windows x64 (Beta)](https://github.com/atakanvass/free-video-downloader/releases/download/v0.1.0-beta/FreeVideoDownloader-Windows-beta.zip)
 - [Release notes and limitations](https://github.com/atakanvass/free-video-downloader/releases/tag/v0.1.0-beta)
 
-Extract the ZIP and open the application. These beta builds are not Apple-notarized or Windows code-signed. Intel Mac and complete Windows download flows have not yet been tested.
+Extract the ZIP and open the app. These beta builds are not Apple-notarized or Windows code-signed; your operating system may display a security warning.
 
-Kaynak kodda macOS ve Windows sürümleri yer alır. Windows sürümü henüz Windows üzerinde test edilmemiştir.
+## How to use
 
-Mac menü çubuğundan YouTube ve Instagram bağlantılarını MP4 video veya MP3 ses olarak indirmek için kişisel bir uygulama. Dosyalar macOS İndirilenler klasörüne kaydedilir. MP4 videolar H.264/AAC biçimine dönüştürülür.
+1. Open the app from the macOS menu bar or the Windows system tray.
+2. Paste a video link and wait for the available formats.
+3. Choose MP3 or a video resolution and click the download icon.
+4. The progress bar shows the download and conversion stages. Your file is saved in Downloads.
 
-## Gereksinimler
+MP4 videos are converted to H.264/AAC for playback compatibility.
 
-- macOS ve Xcode Command Line Tools (`xcode-select --install`)
-- Homebrew ile kurulu `yt-dlp` ve `ffmpeg`: `brew install yt-dlp ffmpeg`
+## Build from source
 
-Uygulama araçları `/opt/homebrew/bin` veya `/usr/local/bin` altında arar. Platform erişim kısıtlamaları ve araç güncellemeleri indirme başarısını etkileyebilir.
+### macOS
 
-## Derleme ve çalıştırma
+Install Xcode Command Line Tools, `yt-dlp` and `ffmpeg`:
 
 ```sh
+xcode-select --install
+brew install yt-dlp ffmpeg
 bash build.sh
 open build/Kaydet.app
 ```
 
-Üst menü çubuğundaki video simgesine tıklayıp bağlantıyı yapıştırın. Formatlar otomatik yüklendikten sonra MP3 veya istediğiniz çözünürlüğü seçip indirme simgesine tıklayın. Dönüştürme sırasında çubuk bu aşamanın yüzdesini gösterir; dosya kaydedildiğinde %100 olur.
+### Windows
 
-Yalnızca indirme hakkına sahip olduğunuz içerikleri indirin ve platform koşullarını dikkate alın. Bu kaynak kod için henüz bir dağıtım lisansı belirlenmemiştir; yt-dlp ve FFmpeg kendi lisanslarıyla dağıtılır.
-
-## Windows
-
-Windows 10 veya 11 üzerinde Python (Tkinter dahil), Node.js 24 ve FFmpeg/FFprobe gereklidir. FFmpeg derlemesi `libx264`, `aac` ve `libmp3lame` kodlayıcılarını içermelidir. PowerShell üzerinden:
+Install Python with Tkinter, Node.js 24 and FFmpeg/FFprobe. FFmpeg must include the `libx264`, `aac` and `libmp3lame` encoders.
 
 ```powershell
 cd windows
@@ -40,6 +42,16 @@ python -m pip install -r requirements.txt
 python kaydet.py
 ```
 
-Uygulama sistem tepsisinde çalışır. Pencereyi kapatmak uygulamayı tepsiye küçültür; simgenin menüsünden çıkılabilir.
+To build a standalone Windows executable, make FFmpeg, FFprobe and Node.js available on PATH, then run:
 
-Tek dosyalık Windows uygulamasını bir Windows bilgisayarda oluşturmak için FFmpeg ve FFprobe PATH üzerinde bulunurken `powershell -ExecutionPolicy Bypass -File windows/build.ps1` çalıştırın. Çıktı `windows/dist/Free Video Downloader.exe` olur. Bu derleme, bağımlılıkları ve FFmpeg araçlarını içerir. Bu projede henüz imzalı bir kurulum paketi veya Windows üzerinde doğrulanmış sürüm yoktur.
+```powershell
+powershell -ExecutionPolicy Bypass -File windows/build.ps1
+```
+
+The output is `windows/dist/Free Video Downloader.exe`.
+
+## Notes
+
+Platform access restrictions and changes may affect downloads. Download only content you have permission to save and follow the relevant platform terms.
+
+No distribution license has yet been selected for this project's source code. yt-dlp, FFmpeg and other bundled components have their own licenses.
