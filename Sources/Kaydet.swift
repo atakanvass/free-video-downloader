@@ -22,7 +22,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSTextFieldDelegate {
             return true
         }
         icon.isTemplate = true
-        icon.accessibilityDescription = "Video indir"
+        icon.accessibilityDescription = "Download video"
         return icon
     }
     func applicationDidFinishLaunching(_ notification: Notification) {
@@ -156,7 +156,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSTextFieldDelegate {
                         if let percent = Double(raw) { DispatchQueue.main.async { self.largestProgress = max(self.largestProgress, min(90, percent * 0.9)); self.bar.doubleValue = self.largestProgress; self.message.stringValue = "\(Int(self.largestProgress))%" } }
                     }
                 }
-                guard result.0 == 0, let path = outputPath, FileManager.default.fileExists(atPath: path) else { throw NSError(domain: "Kaydet", code: 1, userInfo: [NSLocalizedDescriptionKey: "Video indirilemedi. \(String(result.1.suffix(400)))"]) }
+                guard result.0 == 0, let path = outputPath, FileManager.default.fileExists(atPath: path) else { throw NSError(domain: "FreeVideoDownloader", code: 1, userInfo: [NSLocalizedDescriptionKey: "Video download failed. \(String(result.1.suffix(400)))"]) }
                 let source = URL(fileURLWithPath: path)
                 let ffprobe = URL(fileURLWithPath: ffmpeg).deletingLastPathComponent().appendingPathComponent("ffprobe").path
                 var duration: Double?
@@ -177,7 +177,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSTextFieldDelegate {
                     let percent = min(99, max(0, microseconds / 1_000_000 / duration * 100))
                     DispatchQueue.main.async { self.bar.doubleValue = percent; self.message.stringValue = "⚙ \(Int(percent))%" }
                 }
-                guard conversion.0 == 0, FileManager.default.fileExists(atPath: converted.path) else { throw NSError(domain: "Kaydet", code: 2, userInfo: [NSLocalizedDescriptionKey: "Dönüştürme başarısız. \(String(conversion.1.suffix(400)))"]) }
+                guard conversion.0 == 0, FileManager.default.fileExists(atPath: converted.path) else { throw NSError(domain: "FreeVideoDownloader", code: 2, userInfo: [NSLocalizedDescriptionKey: "Conversion failed. \(String(conversion.1.suffix(400)))"]) }
                 let name = source.deletingPathExtension().lastPathComponent
                 let ext = audioOnly ? "mp3" : "mp4"
                 var destination = folder.appendingPathComponent(name).appendingPathExtension(ext); var i = 2
