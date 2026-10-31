@@ -269,6 +269,13 @@ class App:
         self.root.after(100, self.process_events)
 
 if __name__ == '__main__':
+    if len(sys.argv) >= 2 and sys.argv[1] == '--self-test':
+        import yt_dlp
+        for name in ('ffmpeg', 'ffprobe'):
+            path = binary(name)
+            if not path or subprocess.run([path, '-version'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, creationflags=CREATE_NO_WINDOW).returncode:
+                raise SystemExit(1)
+        raise SystemExit(0)
     if len(sys.argv) >= 4 and sys.argv[1] == '--worker':
         worker(sys.argv[2], sys.argv[3], sys.argv[4] if len(sys.argv) > 4 else None)
     else:
