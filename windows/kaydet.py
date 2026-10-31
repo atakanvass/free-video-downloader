@@ -119,7 +119,7 @@ def allowed(url):
 class App:
     def __init__(self):
         self.root = tk.Tk()
-        self.root.title('Kaydet')
+        self.root.title('Free Video Downloader')
         self.root.resizable(False, False)
         self.root.geometry('380x170')
         self.url = tk.StringVar()
@@ -155,7 +155,7 @@ class App:
             draw = ImageDraw.Draw(im)
             draw.rounded_rectangle((4, 10, 60, 54), radius=9, fill='#286d56')
             draw.polygon([(26, 20), (26, 44), (46, 32)], fill='white')
-            self.tray = pystray.Icon('Kaydet', im, 'Kaydet', menu=pystray.Menu(pystray.MenuItem('Open', lambda *_: self.root.after(0, self.show), default=True), pystray.MenuItem('Exit', lambda *_: self.root.after(0, self.exit))))
+            self.tray = pystray.Icon('FreeVideoDownloader', im, 'Free Video Downloader', menu=pystray.Menu(pystray.MenuItem('Open', lambda *_: self.root.after(0, self.show), default=True), pystray.MenuItem('Exit', lambda *_: self.root.after(0, self.exit))))
             threading.Thread(target=self.tray.run, daemon=True).start()
         except ImportError:
             self.tray = None
