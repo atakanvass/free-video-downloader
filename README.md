@@ -29,7 +29,7 @@ Install Xcode Command Line Tools, `yt-dlp` and `ffmpeg`:
 xcode-select --install
 brew install yt-dlp ffmpeg
 bash build.sh
-open build/Kaydet.app
+open "build/Free Video Downloader.app"
 ```
 
 ### Windows
@@ -37,9 +37,7 @@ open build/Kaydet.app
 Install Python with Tkinter, Node.js 24 and FFmpeg/FFprobe. FFmpeg must include the `libx264`, `aac` and `libmp3lame` encoders.
 
 ```powershell
-cd windows
-python -m pip install -r requirements.txt
-python kaydet.py
+python -m pip install -r windows/requirements.txt
 ```
 
 To build a standalone Windows executable, make FFmpeg, FFprobe and Node.js available on PATH, then run:
