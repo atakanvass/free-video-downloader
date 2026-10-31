@@ -1,5 +1,13 @@
 # Free Video Downloader
 
+## Download · İndir
+
+- [macOS — Apple Silicon & Intel (Beta)](https://github.com/atakanvass/free-video-downloader/releases/download/v0.1.0-beta/FreeVideoDownloader-macOS-beta.zip)
+- [Windows x64 (Beta)](https://github.com/atakanvass/free-video-downloader/releases/download/v0.1.0-beta/FreeVideoDownloader-Windows-beta.zip)
+- [Release notes and limitations](https://github.com/atakanvass/free-video-downloader/releases/tag/v0.1.0-beta)
+
+Extract the ZIP and open the application. These beta builds are not Apple-notarized or Windows code-signed. Intel Mac and complete Windows download flows have not yet been tested.
+
 Kaynak kodda macOS ve Windows sürümleri yer alır. Windows sürümü henüz Windows üzerinde test edilmemiştir.
 
 Mac menü çubuğundan YouTube ve Instagram bağlantılarını MP4 video veya MP3 ses olarak indirmek için kişisel bir uygulama. Dosyalar macOS İndirilenler klasörüne kaydedilir. MP4 videolar H.264/AAC biçimine dönüştürülür.
