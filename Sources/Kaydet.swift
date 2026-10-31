@@ -111,7 +111,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSTextFieldDelegate {
     }
     func run(_ executable: String, _ args: [String], output: @escaping (String) -> Void) throws -> (Int32, String) {
         let process = Process(); process.executableURL = URL(fileURLWithPath: executable); process.arguments = args
-        process.environment = ProcessInfo.processInfo.environment.merging(["PATH": (Bundle.main.resourceURL?.path ?? "") + ":/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"]) { _, new in new }
+        var environment = ProcessInfo.processInfo.environment
+        environment["PATH"] = (Bundle.main.resourceURL?.path ?? "") + ":/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
+        if FileManager.default.fileExists(atPath: "/etc/ssl/cert.pem") { environment["SSL_CERT_FILE"] = "/etc/ssl/cert.pem" }
+        process.environment = environment
         let pipe = Pipe(); process.standardOutput = pipe; process.standardError = pipe
         try process.run(); var pending = ""; var all = ""
         while true {
