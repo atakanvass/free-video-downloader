@@ -276,7 +276,9 @@ if __name__ == '__main__':
         import yt_dlp
         for name in ('ffmpeg', 'ffprobe', 'node'):
             path = binary(name)
-            if not path or subprocess.run([path, '-version'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, creationflags=CREATE_NO_WINDOW).returncode:
+            argument = '--version' if name == 'node' else '-version'
+            if not path or subprocess.run([path, argument], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, creationflags=CREATE_NO_WINDOW).returncode:
+                print(f'Self-test failed: {name}', flush=True)
                 raise SystemExit(1)
         raise SystemExit(0)
     if len(sys.argv) >= 4 and sys.argv[1] == '--worker':
