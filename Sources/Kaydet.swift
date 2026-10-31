@@ -80,7 +80,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSTextFieldDelegate {
         DispatchQueue.global(qos: .utility).async {
             do {
                 var heights = Set<Int>()
-                let result = try self.run(ytdlp, ["--ignore-config", "--no-playlist", "--skip-download", "--dump-single-json", "--", url]) { line in
+                let runtime = Bundle.main.resourceURL?.appendingPathComponent("node").path
+                let js = runtime != nil && FileManager.default.isExecutableFile(atPath: runtime!) ? ["--js-runtimes", "node:" + runtime!] : []
+                let result = try self.run(ytdlp, ["--ignore-config", "--no-playlist", "--skip-download", "--dump-single-json"] + js + ["--", url]) { line in
                     guard line.first == "{", let data = line.data(using: .utf8), let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any], let formats = json["formats"] as? [[String: Any]] else { return }
                     for format in formats {
                         guard let codec = format["vcodec"] as? String, codec != "none", let height = (format["height"] as? NSNumber)?.intValue, height > 0 else { continue }
@@ -109,7 +111,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSTextFieldDelegate {
     }
     func run(_ executable: String, _ args: [String], output: @escaping (String) -> Void) throws -> (Int32, String) {
         let process = Process(); process.executableURL = URL(fileURLWithPath: executable); process.arguments = args
-        process.environment = ProcessInfo.processInfo.environment.merging(["PATH": "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"]) { _, new in new }
+        process.environment = ProcessInfo.processInfo.environment.merging(["PATH": (Bundle.main.resourceURL?.path ?? "") + ":/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"]) { _, new in new }
         let pipe = Pipe(); process.standardOutput = pipe; process.standardError = pipe
         try process.run(); var pending = ""; var all = ""
         while true {
@@ -127,7 +129,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSTextFieldDelegate {
         let url = input.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
         guard validURL(url) else { message.stringValue = "⚠"; return }
         guard let folder = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first else { message.stringValue = "⚠"; return }
-        guard let ytdlp = ([Bundle.main.resourceURL?.appendingPathComponent("yt-dlp").path].compactMap { $0 } + ["/opt/homebrew/bin/yt-dlp", "/usr/local/bin/yt-dlp"]).first(where: { FileManager.default.isExecutableFile(atPath: $0) }), let ffmpeg = ["/opt/homebrew/bin/ffmpeg", "/usr/local/bin/ffmpeg"].first(where: { FileManager.default.isExecutableFile(atPath: $0) }) else { message.stringValue = "⚠"; return }
+        guard let ytdlp = ([Bundle.main.resourceURL?.appendingPathComponent("yt-dlp").path].compactMap { $0 } + ["/opt/homebrew/bin/yt-dlp", "/usr/local/bin/yt-dlp"]).first(where: { FileManager.default.isExecutableFile(atPath: $0) }), let ffmpeg = ([Bundle.main.resourceURL?.appendingPathComponent("ffmpeg").path].compactMap { $0 } + ["/opt/homebrew/bin/ffmpeg", "/usr/local/bin/ffmpeg"]).first(where: { FileManager.default.isExecutableFile(atPath: $0) }) else { message.stringValue = "⚠"; return }
         let audioOnly = quality.selectedItem?.title == "MP3"
         var selector = "bestaudio/best"
         if !audioOnly {
@@ -141,7 +143,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSTextFieldDelegate {
             do {
                 try FileManager.default.createDirectory(at: temporary, withIntermediateDirectories: true)
                 var outputPath: String?
-                let args = ["--ignore-config", "--no-playlist", "--newline", "--progress", "--progress-template", "download:KAYDET_PROGRESS:%(progress._percent_str)s", "--print", "after_move:KAYDET_FILE:%(filepath)s", "-f", selector, "-o", temporary.appendingPathComponent("%(title).120s [%(id)s].%(ext)s").path, "--", url]
+                let runtime = Bundle.main.resourceURL?.appendingPathComponent("node").path
+                let js = runtime != nil && FileManager.default.isExecutableFile(atPath: runtime!) ? ["--js-runtimes", "node:" + runtime!] : []
+                let args = js + ["--ignore-config", "--no-playlist", "--newline", "--progress", "--progress-template", "download:KAYDET_PROGRESS:%(progress._percent_str)s", "--print", "after_move:KAYDET_FILE:%(filepath)s", "-f", selector, "-o", temporary.appendingPathComponent("%(title).120s [%(id)s].%(ext)s").path, "--", url]
                 let result = try self.run(ytdlp, args) { line in
                     if let range = line.range(of: "KAYDET_FILE:") { outputPath = String(line[range.upperBound...]).trimmingCharacters(in: .whitespacesAndNewlines) }
                     if let range = line.range(of: "KAYDET_PROGRESS:") {
