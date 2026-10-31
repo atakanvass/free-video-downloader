@@ -1,4 +1,4 @@
-# Kaydet
+# Free Video Downloader
 
 Kaynak kodda macOS ve Windows sürümleri yer alır. Windows sürümü henüz Windows üzerinde test edilmemiştir.
 
