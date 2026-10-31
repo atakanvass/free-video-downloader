@@ -4,8 +4,8 @@ Download YouTube and Instagram videos as MP4 or audio as MP3 from a compact desk
 
 ## Downloads
 
-- [macOS — Apple Silicon & Intel (Beta)](https://github.com/atakanvass/free-video-downloader/releases/download/v0.1.0-beta/FreeVideoDownloader-macOS-beta.zip)
-- [Windows x64 (Beta)](https://github.com/atakanvass/free-video-downloader/releases/download/v0.1.0-beta/FreeVideoDownloader-Windows-beta.zip)
+- [macOS — Apple Silicon & Intel (Beta)](https://github.com/atakanvass/free-video-downloader/releases/download/v0.1.0-beta/FreeVideoDownloader-macOS-universal-beta.zip)
+- [Windows x64 (Beta)](https://github.com/atakanvass/free-video-downloader/releases/download/v0.1.0-beta/FreeVideoDownloader-Windows-x64-beta.zip)
 - [Release notes and limitations](https://github.com/atakanvass/free-video-downloader/releases/tag/v0.1.0-beta)
 
 Extract the ZIP and open the app. These beta builds are not Apple-notarized or Windows code-signed; your operating system may display a security warning.
