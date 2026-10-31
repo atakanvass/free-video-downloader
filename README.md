@@ -24,7 +24,7 @@ Yalnızca indirme hakkına sahip olduğunuz içerikleri indirin ve platform koş
 
 ## Windows
 
-Windows 10 veya 11 üzerinde Python (Tkinter dahil) ve FFmpeg/FFprobe gereklidir. FFmpeg derlemesi `libx264`, `aac` ve `libmp3lame` kodlayıcılarını içermelidir. PowerShell üzerinden:
+Windows 10 veya 11 üzerinde Python (Tkinter dahil), Node.js 24 ve FFmpeg/FFprobe gereklidir. FFmpeg derlemesi `libx264`, `aac` ve `libmp3lame` kodlayıcılarını içermelidir. PowerShell üzerinden:
 
 ```powershell
 cd windows
