@@ -1,0 +1,37 @@
+name: Windows build
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'windows/**'
+      - '.github/workflows/windows-build.yml'
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install FFmpeg
+        shell: powershell
+        run: |
+          choco install ffmpeg --yes --no-progress
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Add-Content $env:GITHUB_PATH 'C:\ProgramData\chocolatey\bin'
+      - name: Build executable
+        shell: powershell
+        run: ./windows/build.ps1
+      - name: Test packaged tools
+        shell: powershell
+        run: |
+          $p = Start-Process -FilePath ./windows/dist/Kaydet.exe -ArgumentList '--self-test' -Wait -PassThru -NoNewWindow
+          if ($p.ExitCode -ne 0) { throw "Self-test failed: $($p.ExitCode)" }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Kaydet-Windows-x64
+          path: windows/dist/Kaydet.exe
+          if-no-files-found: error
