@@ -14,7 +14,7 @@ Uygulama araçları `/opt/homebrew/bin` veya `/usr/local/bin` altında arar. Pla
 ## Derleme ve çalıştırma
 
 ```sh
-./build.sh
+bash build.sh
 open build/Kaydet.app
 ```
 
