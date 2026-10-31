@@ -39,7 +39,10 @@ def send(kind, **kwargs):
 
 def worker(mode, url, height=None):
     import yt_dlp
+    node = binary('node')
     common = {'noplaylist': True, 'quiet': True, 'no_warnings': True, 'ignoreconfig': True}
+    if node:
+        common['js_runtimes'] = {'node': {'path': node}}
     try:
         if mode == 'formats':
             with yt_dlp.YoutubeDL(common) as ydl:
@@ -271,7 +274,7 @@ class App:
 if __name__ == '__main__':
     if len(sys.argv) >= 2 and sys.argv[1] == '--self-test':
         import yt_dlp
-        for name in ('ffmpeg', 'ffprobe'):
+        for name in ('ffmpeg', 'ffprobe', 'node'):
             path = binary(name)
             if not path or subprocess.run([path, '-version'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, creationflags=CREATE_NO_WINDOW).returncode:
                 raise SystemExit(1)
