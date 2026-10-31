@@ -42,4 +42,4 @@ python kaydet.py
 
 Uygulama sistem tepsisinde çalışır. Pencereyi kapatmak uygulamayı tepsiye küçültür; simgenin menüsünden çıkılabilir.
 
-Tek dosyalık Windows uygulamasını bir Windows bilgisayarda oluşturmak için FFmpeg ve FFprobe PATH üzerinde bulunurken `powershell -ExecutionPolicy Bypass -File windows/build.ps1` çalıştırın. Çıktı `windows/dist/Kaydet.exe` olur. Bu derleme, bağımlılıkları ve FFmpeg araçlarını içerir. Bu projede henüz imzalı bir kurulum paketi veya Windows üzerinde doğrulanmış sürüm yoktur.
+Tek dosyalık Windows uygulamasını bir Windows bilgisayarda oluşturmak için FFmpeg ve FFprobe PATH üzerinde bulunurken `powershell -ExecutionPolicy Bypass -File windows/build.ps1` çalıştırın. Çıktı `windows/dist/Free Video Downloader.exe` olur. Bu derleme, bağımlılıkları ve FFmpeg araçlarını içerir. Bu projede henüz imzalı bir kurulum paketi veya Windows üzerinde doğrulanmış sürüm yoktur.
